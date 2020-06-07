@@ -34,8 +34,6 @@ def save_response_content(response, destination):
                 f.write(chunk)
 
 
-os.chdir('/pub/experiments/cluque/')
-
 if __name__ == "__main__":
     file_id = '1U65dAj31y9PCMffLF1AYA3l-mg9VVlm3'
     destination = 'demo.zip'
@@ -46,4 +44,4 @@ with ZipFile('demo.zip', 'r') as zipObj:
     zipObj.extractall()
     os.remove('demo.zip')
     
-print("Imágenes descargadas")
+print("Files downloaded!")
