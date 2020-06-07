@@ -35,7 +35,7 @@ def save_response_content(response, destination):
 
 
 if __name__ == "__main__":
-    file_id = '1U65dAj31y9PCMffLF1AYA3l-mg9VVlm3'
+    file_id = '12O6VWXyqsWZR5_smESsLaeoh4O_bVTQ2'
     destination = 'demo.zip'
     download_file_from_google_drive(file_id, destination)
 
