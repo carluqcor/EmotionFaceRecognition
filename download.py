@@ -45,6 +45,6 @@ with ZipFile('demo.zip', 'r') as zipObj:
     zipObj.extractall()
     os.remove('demo.zip')
 
-shutil.move('ficheros/', 'VGG19demo-evaluator/')
+shutil.move('i62lucoc/', 'VGG19demo-evaluator/')
     
 print("Files downloaded!")
