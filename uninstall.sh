@@ -1,6 +1,6 @@
 #!/bin/bash
 # If not in VGG19demo-evaluator/ do
-cd /VGG19demo-evaluator/i62lucoc
+cd /i62lucoc/
 
 # Remove pipenv environment
 pipenv --rm
