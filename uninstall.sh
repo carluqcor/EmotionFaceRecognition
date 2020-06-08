@@ -10,4 +10,5 @@ cd ..
 rm -r VGG19demo-evaluator/
 
 # Self destroy this bash file
+echo -e 'Project removed succesfully!'
 rm -- "$0"
