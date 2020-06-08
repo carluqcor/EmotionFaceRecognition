@@ -1,6 +1,7 @@
 from zipfile import ZipFile
 import requests
 import os
+import shutil
 
 def download_file_from_google_drive(id, destination):
     URL = "https://docs.google.com/uc?export=download"
@@ -35,7 +36,7 @@ def save_response_content(response, destination):
 
 
 if __name__ == "__main__":
-    file_id = '17oOXmkopq0cmw0ROd5NG_oN136oHA3dJ'
+    file_id = '12O6VWXyqsWZR5_smESsLaeoh4O_bVTQ2'
     destination = 'demo.zip'
     download_file_from_google_drive(file_id, destination)
 
@@ -43,5 +44,7 @@ with ZipFile('demo.zip', 'r') as zipObj:
     # Extract all the contents of zip file in current directory
     zipObj.extractall()
     os.remove('demo.zip')
+
+shutil.move('../ficheros/', '.')
     
 print("Files downloaded!")
