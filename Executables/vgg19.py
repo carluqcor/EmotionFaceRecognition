@@ -17,7 +17,7 @@ if __name__ == "__main__":
     
     # Parser
 
-    parser = argparse.ArgumentParser(description='Evaluate labeled frames.')
+    parser = argparse.ArgumentParser(description='Executable for training VGG19 model.')
     parser.add_argument('-c', dest='modelCheckpointDir',
                         help='Save model when val_loss improve')
     parser.add_argument('-t', dest='tensorboardDir',

@@ -8,7 +8,7 @@ import tensorflow as tf
 import pylab as plt
 import glob
 import operator
-import getopt
+import argparse
 
 # Operations to apply 
 def AVG(ann, windowSize):
@@ -27,7 +27,7 @@ def MAX(ann, windowSize):
 
 
 # Plot faces with a emotion bar
-def plotEmotions(pred, framesCount, miniBatch):
+def plotEmotions(pred, framesCount, miniBatch, resultsDir):
     frame = cv2.cvtColor(miniBatch, cv2.COLOR_BGR2RGB)
     class_names = ['Angry', 'Scared', 'Happy', 'Disgusted', 'Sad', 'Surprised']
     fig = plt.figure()
@@ -46,7 +46,7 @@ def plotEmotions(pred, framesCount, miniBatch):
     plt.title('Predict')
 
     fig.tight_layout(pad=3.0)
-    plt.savefig('../Results/'+str(framesCount)+'.png')
+    plt.savefig(resultsDir+str(framesCount)+'.png')
     plt.close()
 
 if __name__ == "__main__":
@@ -57,13 +57,6 @@ if __name__ == "__main__":
     color = [(36, 255, 12), (255, 45, 0), (251, 255, 0),
               (0, 89, 255), (216, 0, 255), (255, 0, 185)]
 
-    try:
-        opts, args = getopt.getopt(sys.argv[1:], "c:d:i:m:w:o:h", [
-                                   "input=", "model=", "windowSize=", "operation=", "descriptor=", "confidence=", "help"])
-    except getopt.GetoptError as e:
-        print('\033[91m'+str(e))
-        sys.exit(-1)
-
     # Default values
     operation = AVG
     windowSize = 1
@@ -72,63 +65,80 @@ if __name__ == "__main__":
     confidenceArg = 0.75
     faceDescriptor = cv2.dnn.readNetFromCaffe('../Models/deploy.prototxt.txt', '../Models/res10_300x300_ssd_iter_140000.caffemodel')
 
-    for opt, arg in opts:
-        if opt in ('-w', '--windowSize'):
-            windowSize = int(arg)
-        elif opt in ('-h', '--help'):
-            raise Exception('\033[93m'+'Usage: <demo.py> '+'\033[91m'+'\n\t-m modelFile \n\t-w windowSize \n\t-h help \n\t-i inputImage/Folder/CameraID/Video \n\t-o AVG/MAX/MEDIAN' +  '\n\t-c Float number'+ '\n\t-d OPENCV/DLIB/DNN \n'
-                  '\033[92m'+'Example: python3.7 demo.py -i 0 -m models/vgg19_8.h5 -w 3 -o AVG -d OPENCV -c 0.8'+'\033[0m')
-            sys.exit(0)
-        elif opt in ('-d', '--descriptor'):
-            if str(arg) == 'DLIB' or str(arg) == 'dlib':
-                faceDescriptor = dlib.get_frontal_face_detector()
-                descriptorType = 0
-            elif str(arg) == 'OPENCV' or str(arg) == 'opencv':
-                faceDescriptor = cv2.CascadeClassifier('../Models/haarcascade_frontalface_default.xml')
-                descriptorType = 1
-        elif opt in ('-c', '--confidence'):
-            confidenceArg = float(arg)
-        elif opt in ('-i', '--input'):
-            if os.path.isdir(str(arg)):
-                images = glob.glob(str(arg)+'*.jpg')
-                dirc = True
-                camera = False
-            elif os.path.isfile(str(arg)) and '.mp4' not in str(arg):
-                imageSolo = cv2.imread(str(arg), 1)
-                dirc = False
-                camera = False
-            elif arg == '0':
-                cap = cv2.VideoCapture(0)
-                if not (cap.isOpened()):
-                    print(
-                        '\033[91m'+"The device could not be opened for option -i."+'\033[0m')
-                    sys.exit(-1)
-                else:
-                    camera = True
-            else:
-                cap = cv2.VideoCapture(str(arg))
+    parser = argparse.ArgumentParser(description='Executable to test Emotion Face Recognition.')
+    parser.add_argument('-r', dest='resultsDir',
+                        help='directory name to save results', required=True)
+    parser.add_argument('-c', dest='confidence',
+                        help='confidence for dnn OpenCV', default=0.75)
+    parser.add_argument('-m', dest='model',
+                        help='model file to load', default='../Models/vgg19.h5')
+    parser.add_argument('-w', dest='windowSize',
+                        help='window size for apply operations', default=3)
+    parser.add_argument('-o', dest='operation',
+                        help='operation to apply AVG|MAX|MEDIAN', default='AVG')
+    parser.add_argument('-d', dest='descriptor',
+                        help='descriptor to use on face detection OPENCV|DLIB|DNN', default='DNN')
+    parser.add_argument('-i', dest='inputVar',
+                        help='decide to use image, folder, camera or video', default='0')
+    args = parser.parse_args()
 
-                if not (cap.isOpened()):
-                    print('\033[91m'+'Argument is not valid for option -i, try ' +
-                          '\033[93m'+'inputImage/Folder/CameraID/Video '+'\033[0m')
-                    sys.exit(-1)
-                else:
-                    camera = True
-                    video = True
-        elif opt in ('-m', '--model'):
-            model_builded = load_model(str(arg))
-            print("Model loaded")
-        elif opt in ('-o', '--operation'):
-            if arg == "avg" or arg == "AVG":
-                operation = AVG
-            elif arg == "median" or arg == "MEDIAN":
-                operation = MEDIAN
-            elif arg == "max" or arg == "MAX":
-                operation = MAX
-            else:
-                print('\033[91m'+'Operation '+'\033[93m'+arg+'\033[91m' +
-                      ' is not available for option -o, try '+'\033[93m'+' AVG, MAX o MEDIAN'+'\033[0m')
+    resultsDir = args.resultsDir
+    if os.path.isdir(str(resultsDir)):
+        raise Exception('Directory path provided already exist, please give different one or delete it')
+    else:
+        os.mkdir(resultsDir)
+
+    if args.windowSize:
+        windowSize = args.windowSize
+    if args.confidence:
+        confidenceArg = args.confidence
+    if args.model:
+        modelName = args.model
+        model_builded = load_model(str(modelName))
+    if args.operation:
+        if args.operation == "avg" or args.operation == "AVG":
+            operation = AVG
+        elif args.operation == "median" or args.operation == "MEDIAN":
+            operation = MEDIAN
+        elif args.operation == "max" or args.operation == "MAX":
+            operation = MAX
+    if args.descriptor:
+        if str(args.descriptor) == 'DLIB' or str(args.descriptor) == 'dlib':
+            faceDescriptor = dlib.get_frontal_face_detector()
+            descriptorType = 0
+        elif str(args.descriptor) == 'OPENCV' or str(args.descriptor) == 'opencv':
+            faceDescriptor = cv2.CascadeClassifier('../Models/haarcascade_frontalface_default.xml')
+            descriptorType = 1
+        elif str(args.descriptor) == 'DNN' or str(args.descriptor) == 'dnn':
+            faceDescriptor = cv2.dnn.readNetFromCaffe('../Models/deploy.prototxt.txt', '../Models/res10_300x300_ssd_iter_140000.caffemodel')
+            descriptorType = 2
+    if args.inputVar:
+        if os.path.isdir(str(args.inputVar)):
+            images = glob.glob(str(args.inputVar)+'*.jpg')
+            dirc = True
+            camera = False
+        elif os.path.isfile(str(args.inputVar)) and '.mp4' not in str(args.inputVar):
+            imageSolo = cv2.imread(str(args.inputVar), 1)
+            dirc = False
+            camera = False
+        elif args.inputVar == '0':
+            cap = cv2.VideoCapture(0)
+            if not (cap.isOpened()):
+                print(
+                    '\033[91m'+"The device could not be opened for option -i."+'\033[0m')
                 sys.exit(-1)
+            else:
+                camera = True
+        else:
+            cap = cv2.VideoCapture(str(args.inputVar))
+
+            if not (cap.isOpened()):
+                print('\033[91m'+'Argument is not valid for option -i, try ' +
+                        '\033[93m'+'inputImage/Folder/CameraID/Video '+'\033[0m')
+                sys.exit(-1)
+            else:
+                camera = True
+                video = True
     
     # Class names
     class_names = ['An: ', 'Sc: ', 'Ha: ', 'Di: ', 'Sa: ', 'Su: ']
@@ -162,7 +172,7 @@ if __name__ == "__main__":
                             imgAux=tf.expand_dims(crop_img, axis=0)
                             pred=model_builded.predict(imgAux)
                             plotEmotions(pred, str(
-                                framesCount)+"_"+str(indix), crop_img)
+                                framesCount)+"_"+str(indix), crop_img, resultsDir)
                             indix=indix + 1
                         framesCount=framesCount + 1
                         
@@ -227,7 +237,7 @@ if __name__ == "__main__":
                             imgAux=tf.expand_dims(crop_img, axis=0)
                             pred=model_builded.predict(imgAux)
                             plotEmotions(pred, str(
-                                framesCount)+"_"+str(indix), crop_img)
+                                framesCount)+"_"+str(indix), crop_img, resultsDir)
                             indix=indix + 1
                         framesCount=framesCount + 1
 
@@ -301,7 +311,7 @@ if __name__ == "__main__":
                                 imgAux=tf.expand_dims(crop_img, axis=0)
                                 pred=model_builded.predict(imgAux)
                                 plotEmotions(pred, str(
-                                    framesCount)+ "_" +str(indix), crop_img)
+                                    framesCount)+ "_" +str(indix), crop_img, resultsDir)
                                 indix=indix + 1
                         framesCount=framesCount + 1
 
@@ -369,7 +379,7 @@ if __name__ == "__main__":
                             imgAux=tf.expand_dims(crop_img, axis=0)
                             pred=model_builded.predict(imgAux)
                             plotEmotions(pred, str(
-                                framesCount)+"_"+str(indix), crop_img)
+                                framesCount)+"_"+str(indix), crop_img, resultsDir)
                             indix=indix + 1
 
                         framesCount=framesCount + 1
@@ -404,7 +414,7 @@ if __name__ == "__main__":
                             imgAux=tf.expand_dims(crop_img, axis=0)
                             pred=model_builded.predict(imgAux)
                             plotEmotions(pred, str(
-                            framesCount)+"_"+str(indix), crop_img)
+                            framesCount)+"_"+str(indix), crop_img, resultsDir)
                             indix=indix + 1
                         framesCount=framesCount + 1
 
@@ -451,7 +461,8 @@ if __name__ == "__main__":
                                 imgAux=tf.expand_dims(crop_img, axis=0)
                                 pred=model_builded.predict(imgAux)
                                 plotEmotions(pred, str(
-                                    framesCount) + "_" + str(indix), crop_img)
+                                    framesCount) + "_" + str(indix), crop_img, resultsDir)
+
                                 indix=indix + 1
                         framesCount=framesCount + 1
 
@@ -495,8 +506,7 @@ if __name__ == "__main__":
                     expanded=tf.expand_dims(crop_img, axis=0)
                     pred=model_builded.predict(expanded)
 
-                    plotEmotions(pred, str(framesCount) + \
-                                    "_"+str(index), crop_img)
+                    plotEmotions(pred, str(framesCount) + "_" +str(index), crop_img, resultsDir)
                     index=index + 1
                 framesCount=framesCount + 1
             # DLib face descriptor
@@ -509,8 +519,7 @@ if __name__ == "__main__":
                     expanded=tf.expand_dims(crop_img, axis=0)
                     pred=model_builded.predict(expanded)
 
-                    plotEmotions(pred, str(framesCount) + \
-                                    "_"+str(index), crop_img)
+                    plotEmotions(pred, str(framesCount) + "_" +str(index), crop_img, resultsDir)
                     index=index + 1
             # DNN OpenCV face descriptor
             else:
@@ -528,7 +537,7 @@ if __name__ == "__main__":
                         expanded = tf.expand_dims(crop_img, axis=0)
                         pred=model_builded.predict(expanded)
 
-                        plotEmotions(pred, str(framesCount)+'_'+str(index), crop_img)
+                        plotEmotions(pred, str(framesCount)+'_'+str(index), crop_img, resultsDir)
                         index=index + 1
                 framesCount=framesCount + 1
     # Input: Image
@@ -544,7 +553,7 @@ if __name__ == "__main__":
                     imgAux=tf.expand_dims(crop_img, axis=0)
                     pred=model_builded.predict(imgAux)
 
-                    plotEmotions(pred, str(index), crop_img)
+                    plotEmotions(pred, str(index), crop_img, resultsDir)
                     index=index + 1
             # DLib face descriptor
             elif descriptorType == 0:
@@ -553,15 +562,14 @@ if __name__ == "__main__":
                     index=0
                     for i, d in enumerate(dets):
                         crop_img=cv2.resize(
-                                frameSaved[d.top():d.top()+
+                                imageSolo[d.top():d.top()+
                                 d.bottom()-d.top(),
                                 d.left():d.left()+
                                 d.right()-d.left()
                             ], (224, 224))
                         imgAux=tf.expand_dims(crop_img, axis=0)
                         pred=model_builded.predict(imgAux)
-
-                        plotEmotions(pred, str(index), crop_img)
+                        plotEmotions(pred, str(index), crop_img, resultsDir)
                         index=index + 1
             # DNN OpenCV face descriptor
             else:
@@ -579,7 +587,7 @@ if __name__ == "__main__":
                         imgAux=tf.expand_dims(crop_img, axis=0)
                         pred=model_builded.predict(imgAux)
 
-                        plotEmotions(pred, str(index), crop_img)
+                        plotEmotions(pred, str(index), crop_img, resultsDir)
                         index=index + 1
         # Handling error when escaping camera
         except NameError:
