@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+matplotlib = {pyplot = "*"}
+pandas = "*"
+keras = "*"
+tensorflow = "*"
+sklearn = "*"
+dlib = "*"
+glob3 = "*"
+opencv-python-headless = "*"
+opencv-contrib-python = "*"
+face_recognition = "*"
+keras-applications = "*"
+keras-preprocessing = "*"
+
+[requires]
+python_version = "3.7"
+
+[dev-packages]
+autopep8 = "*"
