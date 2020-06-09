@@ -39,7 +39,7 @@ def score(lenEmotion):
 
 
 if __name__ == "__main__":   
-    model = load_model('Modelos/vgg19_8.h5')
+    model = load_model('../Models/vgg19.h5')
     windowSize = 3
     operation = 'AVG'
     class_names = ['Angry', 'Scared', 'Happy', 'Disgusted', 'Sad', 'Surprised']
