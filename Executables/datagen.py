@@ -1,7 +1,7 @@
 def generateDatagen(datasetDir, batch_size):
     from tensorflow.keras.preprocessing.image import ImageDataGenerator
-    train_dir = datasetDir+'/training/'
-    val_dir = datasetDir+'/validation/'
+    train_dir = datasetDir+'training/'
+    val_dir = datasetDir+'validation/'
     img_width = img_height = 224
 
     train_datagen = ImageDataGenerator(
