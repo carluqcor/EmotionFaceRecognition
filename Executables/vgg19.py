@@ -19,16 +19,26 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Executable for training VGG19 model.')
     parser.add_argument('-c', dest='modelCheckpointDir',
-                        help='Save model when val_loss improve')
+                        help='save model when val_loss improve')
+    parser.add_argument('-d', dest='datasetDir',
+                        help='path to dataset', required=True)
     parser.add_argument('-t', dest='tensorboardDir',
-                        help='Add path to save tensorboard')
-    parser.add_argument('-m', dest='ModelName',
-                        help='Add model filename to be saved'. required=True)
+                        help='path to save tensorboard')
+    parser.add_argument('-m', dest='modelName',
+                        help='add model filename to be saved', required=True)
     parser.add_argument('-h', dest='historyName',
-                        help='Add history filename to save history object after training')
-    parser.add_argument('-o', dest='operation',
-                        help='operation to apply AVG|MAX|MEDIAN')
+                        help='add history filename to save history object after training')
     args = parser.parse_args()
+
+    ModelName = args.modelName
+    datasetDir = args.datasetDir
+
+    if args.tensorboardDir:
+        tensorboardDir = args.tensorboardDir
+    if args.modelCheckpointDir:
+        modelCheckpointDir = args.modelCheckpointDir
+    if args.history:
+        historyName = args.history
 
     # If layer is added must change last frozen layer to first dense layer after convs blocks
     base_model = vgg19.VGG19(
@@ -77,7 +87,7 @@ if __name__ == "__main__":
     class_names = ['Angry', 'Scared', 'Happy', 'Disgusted', 'Sad', 'Surprised']
 
     # Add dataset generator from flow from directory below
-    # train_generator, validation_generator = 
+    train_generator, validation_generator = generateDatagen(datasetDir)
 
     # Early stopping
     earlystop = EarlyStopping(monitor='val_loss',
