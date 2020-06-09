@@ -110,8 +110,7 @@ if __name__ == "__main__":
 
                 if not (cap.isOpened()):
                     print('\033[91m'+'Argument is not valid for option -i, try ' +
-                          '\033[93m'+'inputImage/Folder/
-                          CameraID/Video '+'\033[0m')
+                          '\033[93m'+'inputImage/Folder/CameraID/Video '+'\033[0m')
                     sys.exit(-1)
                 else:
                     camera = True
