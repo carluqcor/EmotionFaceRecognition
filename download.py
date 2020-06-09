@@ -36,7 +36,7 @@ def save_response_content(response, destination):
 
 
 if __name__ == "__main__":
-    file_id = '1WZylkacomsT-mctxxtD_XdUSr7Yo99r9'
+    file_id = '1Jeatv0disy700Iad4YkxsbWC5mRTZHr7'
     destination = 'demo.zip'
     download_file_from_google_drive(file_id, destination)
 
@@ -44,7 +44,5 @@ with ZipFile('demo.zip', 'r') as zipObj:
     # Extract all the contents of zip file in current directory
     zipObj.extractall()
     os.remove('demo.zip')
-
-shutil.move('i62lucoc/', 'EmotionFaceRecognition/')
     
 print("Files downloaded!")
