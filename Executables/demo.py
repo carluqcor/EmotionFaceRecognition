@@ -67,10 +67,10 @@ if __name__ == "__main__":
     # Default values
     operation = AVG
     windowSize = 1
-    modelName = 'Models/vgg19.h5'
+    modelName = '../Models/vgg19.h5'
     descriptorType = 2
     confidenceArg = 0.75
-    faceDescriptor = cv2.dnn.readNetFromCaffe('Models/deploy.prototxt.txt', 'Models/res10_300x300_ssd_iter_140000.caffemodel')
+    faceDescriptor = cv2.dnn.readNetFromCaffe('../Models/deploy.prototxt.txt', '../Models/res10_300x300_ssd_iter_140000.caffemodel')
 
     for opt, arg in opts:
         if opt in ('-w', '--windowSize'):
@@ -84,7 +84,7 @@ if __name__ == "__main__":
                 faceDescriptor = dlib.get_frontal_face_detector()
                 descriptorType = 0
             elif str(arg) == 'OPENCV' or str(arg) == 'opencv':
-                faceDescriptor = cv2.CascadeClassifier('Models/haarcascade_frontalface_default.xml')
+                faceDescriptor = cv2.CascadeClassifier('../Models/haarcascade_frontalface_default.xml')
                 descriptorType = 1
         elif opt in ('-c', '--confidence'):
             confidenceArg = float(arg)
