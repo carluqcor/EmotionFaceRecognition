@@ -46,8 +46,8 @@ def plotEmotions(pred, framesCount, miniBatch):
     plt.title('Predict')
 
     fig.tight_layout(pad=3.0)
-    plt.savefig(str(framesCount)+'.png')
-
+    plt.savefig('../Results/'+str(framesCount)+'.png')
+    plt.close()
 
 if __name__ == "__main__":
     dirc = False
@@ -517,8 +517,8 @@ if __name__ == "__main__":
                 (h, w) = imgAux.shape[:2]
                 blob = cv2.dnn.blobFromImage(cv2.resize(imgAux, (224, 224)), 1.0, (224, 224), (104.0, 177.0, 123.0))
 
-                model.setInput(blob)
-                detections = model.forward()
+                faceDescriptor.setInput(blob)
+                detections = faceDescriptor.forward()
                 index=0
                 for i in range(0, detections.shape[2]):
                     if (detections[0, 0, i, 2] > 0.6):
@@ -568,8 +568,8 @@ if __name__ == "__main__":
                 (h, w) = imageSolo.shape[:2]
                 blob = cv2.dnn.blobFromImage(cv2.resize(imageSolo, (224, 224)), 1.0, (224, 224), (104.0, 177.0, 123.0))
 
-                model.setInput(blob)
-                detections = model.forward()
+                faceDescriptor.setInput(blob)
+                detections = faceDescriptor.forward()
                 index=0
                 for i in range(0, detections.shape[2]):
                     if (detections[0, 0, i, 2] > 0.6):
