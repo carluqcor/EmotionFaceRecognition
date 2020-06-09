@@ -400,11 +400,11 @@ if __name__ == "__main__":
                                 d.bottom()-d.top(),
                                 d.left():d.left()+
                                 d.right()-d.left()
-                            ],
+                            ], (224, 224))
                             imgAux=tf.expand_dims(crop_img, axis=0)
                             pred=model_builded.predict(imgAux)
                             plotEmotions(pred, str(
-                                framesCount)+"_"+str(indix), crop_img)
+                            framesCount)+"_"+str(indix), crop_img)
                             indix=indix + 1
                         framesCount=framesCount + 1
 
@@ -414,7 +414,7 @@ if __name__ == "__main__":
                                 d.bottom()-d.top(),
                                 d.left():d.left()+
                                 d.right()-d.left()
-                            ],
+                            ], (224, 224))
                         imgAux=tf.expand_dims(crop_img, axis=0)
                         pred=model_builded.predict(imgAux)
                         cv2.rectangle(frame, (d.left(), d.top()), (d.left()+d.right()-d.left(), d.top()+d.bottom()-d.top()), (255, 0, 0), 2)
@@ -557,7 +557,7 @@ if __name__ == "__main__":
                                 d.bottom()-d.top(),
                                 d.left():d.left()+
                                 d.right()-d.left()
-                            ],
+                            ], (224, 224))
                         imgAux=tf.expand_dims(crop_img, axis=0)
                         pred=model_builded.predict(imgAux)
 
