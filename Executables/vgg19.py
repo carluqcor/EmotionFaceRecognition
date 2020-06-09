@@ -4,9 +4,7 @@ if __name__ == "__main__":
     
     #### Add GPU utils #### 
 
-    from orderingDataset import getimagesPerClase
     from datagen import generateDatagen
-    from sklearn.model_selection import train_test_split
     from sklearn.metrics import accuracy_score
     from predict_onSingleBatch import *
     from tensorflow.keras import regularizers
