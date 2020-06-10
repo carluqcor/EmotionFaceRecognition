@@ -30,13 +30,17 @@ if __name__ == "__main__":
                         help='set epoch number', default=15)
     parser.add_argument('-f', dest='historyName',
                         help='add history filename to save history object after training')
+    parser.add_argument('-n', dest='classes',
+                        help='set number of classes', default=6)
     args = parser.parse_args()
 
     ModelName = args.modelName
     datasetDir = args.datasetDir
 
     callbacks = []
-
+    
+    if args.classes:
+        n_classes = int(args.classes)
     if args.tensorboardDir:
         tensorboardDir = args.tensorboardDir
         if not os.path.isdir(tensorboardDir):
@@ -102,9 +106,6 @@ if __name__ == "__main__":
   
     # Change if layer is added to first dense layer after convs blocks
     model_builded.layers[23].trainable = False
-    
-    # Class number
-    n_classes = 6
     
     # Class type
     class_names = ['Angry', 'Scared', 'Happy', 'Disgusted', 'Sad', 'Surprised']
