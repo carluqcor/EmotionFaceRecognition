@@ -32,7 +32,7 @@ def plotEmotions(pred, framesCount, miniBatch, resultsDir):
     class_names = ['Angry', 'Scared', 'Happy', 'Disgusted', 'Sad', 'Surprised']
     fig = plt.figure()
     fig.add_subplot(221)
-    plt.title('Muestra')
+    plt.title('Sample')
     plt.imshow(frame)
 
     y_pos = np.arange(len(class_names))
