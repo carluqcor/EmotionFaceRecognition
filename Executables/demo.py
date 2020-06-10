@@ -54,9 +54,11 @@ if __name__ == "__main__":
     camera = False
     video = False
     # Colors for emotions to plot
-    color = [(36, 255, 12), (255, 45, 0), (251, 255, 0),
-              (0, 89, 255), (216, 0, 255), (255, 0, 185)]
-
+    color = [(255, 0, 0), (250, 32, 236), (35, 235, 13),
+              (255, 147, 4), (4, 38, 255), (239, 255, 4)]
+    
+    class_names = ['An: ', 'Sc: ', 'Ha: ', 'Di: ', 'Sa: ', 'Su: ']
+    
     # Default values
     operation = AVG
     windowSize = 1
