@@ -18,25 +18,50 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Executable for training VGG19 model.')
     parser.add_argument('-c', dest='modelCheckpointDir',
                         help='save model when val_loss improve')
+    parser.add_argument('-b', dest='batchSize',
+                        help='set batch size value', default=32)
     parser.add_argument('-d', dest='datasetDir',
                         help='path to dataset', required=True)
     parser.add_argument('-t', dest='tensorboardDir',
                         help='path to save tensorboard')
     parser.add_argument('-m', dest='modelName',
                         help='add model filename to be saved', required=True)
-    parser.add_argument('-h', dest='historyName',
+    parser.add_argument('-e', dest='epoch',
+                        help='set epoch number', default=15)
+    parser.add_argument('-f', dest='historyName',
                         help='add history filename to save history object after training')
     args = parser.parse_args()
 
     ModelName = args.modelName
     datasetDir = args.datasetDir
 
+    callbacks = []
+
     if args.tensorboardDir:
         tensorboardDir = args.tensorboardDir
+        if not os.path.isdir(tensorboardDir):
+            os.mkdir(tensorboardDir)
+        tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=tensorboardDir)
+        callbacks.append(tensorboard_callback)
+
+    if args.batchSize:
+        batchSize = int(args.batchSize)
+
+    if args.epoch:
+        epochs = int(args.epoch)
+
     if args.modelCheckpointDir:
         modelCheckpointDir = args.modelCheckpointDir
-    if args.history:
-        historyName = args.history
+        checkpoint = ModelCheckpoint(filepath=modelCheckpointDir,
+            save_weights_only=False,
+            monitor='val_loss', 
+            verbose=1, 
+            save_best_only=True, 
+            mode='min')
+        callbacks.append(checkpoint)
+        
+    if args.historyName:
+        historyName = args.historyName
 
     # If layer is added must change last frozen layer to first dense layer after convs blocks
     base_model = vgg19.VGG19(
@@ -85,50 +110,41 @@ if __name__ == "__main__":
     class_names = ['Angry', 'Scared', 'Happy', 'Disgusted', 'Sad', 'Surprised']
 
     # Add dataset generator from flow from directory below
-    train_generator, validation_generator = generateDatagen(datasetDir)
+    train_generator, validation_generator = generateDatagen(datasetDir, batchSize)
 
     # Early stopping
     earlystop = EarlyStopping(monitor='val_loss',
-                              mode='min',
-                              min_delta=0,
-                              patience=4,
-                              restore_best_weights=True,
-                              verbose=1)
+        mode='min',
+        min_delta=0,
+        patience=4,
+        restore_best_weights=True,
+        verbose=1)
+    callbacks.append(earlystop)
 
     reduce_lr = ReduceLROnPlateau(monitor='val_loss',
-                                  factor=0.2,
-                                  cooldown=0,
-                                  patience=5,
-                                  min_lr=0,
-                                  mode='min',
-                                  epsilon=0.001,
-                                  verbose=1)
-
-    if not os.path.isdir(tensorboardDir):
-       os.mkdir(tensorboardDir)
-    
-    tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=tensorboardDir)
-
-    checkpoint = ModelCheckpoint(filepath=modelCheckpointDir,
-                                                 save_weights_only=False,
-                                                 monitor='val_loss', 
-                                                 verbose=1, 
-                                                 save_best_only=True, 
-                                                 mode='min')
+        factor=0.2,
+        cooldown=0,
+        patience=5,
+        min_lr=0,
+        mode='min',
+        epsilon=0.001,
+        verbose=1)    
+    callbacks.append(reduce_lr)
 
 
     # Entrenamiento del modelo
     history = model_builded.fit(train_generator,
-                                        steps_per_epoch=train_generator.samples // 64,
-                                        validation_data=validation_generator,
-                                        validation_steps=validation_generator.samples // 64,
-                                        epochs=200,
-                                        callbacks=[earlystop, checkpoint, tensorboard_callback])
+        steps_per_epoch=train_generator.samples // batchSize,
+        validation_data=validation_generator,
+        validation_steps=validation_generator.samples // batchSize,
+        epochs=epochs,
+        callbacks=callbacks)
     
     predictOnSingleBatch(model_builded)
 
-    with open(historyName, 'wb') as file_pi:
-        pickle.dump(history.history, file_pi)
+    if historyName:
+        with open(historyName, 'wb') as file_pi:
+            pickle.dump(history.history, file_pi)
         
     model_builded.save(ModelName+".h5")
 
