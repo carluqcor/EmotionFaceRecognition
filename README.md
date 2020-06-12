@@ -10,7 +10,7 @@
 </p>
 
 ## Description
-EmotionFaceRecognition is a software designed to predict emotions from facial expressions written in Python.
+EmotionFaceRecognition is a software designed to predict emotions from facial expressions written in Python. The purpose of this project is to allow a machine to be capable to detect face expressions in real time while predicting the emotions.
 
 ## Table of Contents
 * [Install](#install)
@@ -86,7 +86,8 @@ $ ./uninstall.sh
 
 ## Built with
 - [TensorFlow](https://github.com/tensorflow/tensorflow) - Tools for machine learning.
-- [Keras](https://github.com/keras-team/keras) - Tools neural networks.
+- [Keras](https://github.com/keras-team/keras) - Tools for convolutional neural networks.
+- [OpenCV](https://github.com/opencv/opencv) - Tools for image processing
 - [EmotioNet](http://cbcsl.ece.ohio-state.edu/EmotionNetChallenge/) - Database for training and validation.
 - [EmotionFACS](https://imotions.com/blog/facial-action-coding-system/) - Database for training and validation.
 - [AffectNet](http://mohammadmahoor.com/affectnet/) - Database for training and validation.
