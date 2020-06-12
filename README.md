@@ -43,9 +43,9 @@ $pipenv shell
 | Confidence   | Confidence to accept a face detection from DNN OpenCV detector   | -c | False | 0.75 | None |
 | Model File   | Trained model filename   | -m | False  | vgg19.h5 | None |
 | Window Size   | Integer number to apply temporal window operations  | -w | False | 3 | < 2 (Deactivate) \ > 1 (Activate) |
-| Operation   | Operation to apply when temporal window is activated   | -o | AVG | AVG \ MEDIAN \ MAX  |
+| Operation   | Operation to apply when temporal window is activated   | -o | False | AVG | AVG \ MEDIAN \ MAX  |
 | Face Detector  | Select which face detector is going to be used | -d | False | 'DNN' | DNN \ OPENCV \ DLIB |
-| Media Input  |  Select input media  | -i | False | '0' | 0 (camera) \ video file | image file | folder with images |
+| Media Input  |  Select input media  | -i | False | '0' | 0 (camera) \ video file \ image file \ folder with images |
 
 
 ## Demo
