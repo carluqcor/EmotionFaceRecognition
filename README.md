@@ -10,17 +10,19 @@
 </p>
 
 ## Description
-EmotionFaceRecognition is  
+EmotionFaceRecognition is a software designed to predict emotions from facial expressions written in Python.
 
 ## Table of Contents
-* [Instalation](#instalation)
+* [Install](#install)
 * [Demo parameters](#demo-parameters)
 * [Demo](#demo)
 * [Uninstall](#uninstall)
 * [Built with](#built-with)
+* [Credits](#credits)
+* [Author](#author)
 * [License](#license)
 
-## Instalation
+## Install
 ```bash
 # Repository files
 $ git clone git@github.com:i62lucoc/EmotionFaceRecognition.git
@@ -42,10 +44,10 @@ $pipenv shell
 | Results Directory      | Directory path to save results    | -r   |True   |    None      | None |
 | Confidence   | Confidence to accept a face detection from DNN OpenCV detector   | -c | False | 0.75 | None |
 | Model File   | Trained model filename   | -m | False  | vgg19.h5 | None |
-| Window Size   | Integer number to apply temporal window operations  | -w | False | 3 | < 2 (Deactivate) \ > 1 (Activate) |
-| Operation   | Operation to apply when temporal window is activated   | -o | False | AVG | AVG \ MEDIAN \ MAX  |
-| Face Detector  | Select which face detector is going to be used | -d | False | 'DNN' | DNN \ OPENCV \ DLIB |
-| Media Input  |  Select input media  | -i | False | '0' | 0 (camera) \ video file \ image file \ folder with images |
+| Window Size   | Integer number to apply temporal window operations  | -w | False | 3 | < 2 (Deactivate) <br/> > 1 (Activate) |
+| Operation   | Operation to apply when temporal window is activated   | -o | False | AVG | AVG <br/> MEDIAN <br/> MAX  |
+| Face Detector  | Select which face detector is going to be used | -d | False | 'DNN' | DNN <br/> OPENCV <br/> DLIB |
+| Media Input  |  Select input media  | -i | False | '0' | 0 (Camera) <br/> Video file <br/> Image file <br/> Folder with images |
 
 
 ## Demo
@@ -85,6 +87,12 @@ $ ./uninstall.sh
 ## Built with
 - [TensorFlow](https://github.com/tensorflow/tensorflow) - Tools for machine learning.
 - [Keras](https://github.com/keras-team/keras) - Tools neural networks.
+- [EmotioNet](http://cbcsl.ece.ohio-state.edu/EmotionNetChallenge/) - Database for training and validation.
+- [EmotionFACS](https://imotions.com/blog/facial-action-coding-system/) - Database for training and validation.
+- [AffectNet](http://mohammadmahoor.com/affectnet/) - Database for training and validation.
+
+## Credits
+- [Video for evaluating model and demo](https://www.youtube.com/watch?v=y2YUMPJATmg)
 
 ## Author
 - **Carlos Luque Córdoba** - lead developer: [GitHub](https://github.com/i62lucoc) & [LinkedIn](www.linkedin.com/in/carlosluquecordoba).
