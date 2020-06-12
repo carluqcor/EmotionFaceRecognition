@@ -63,9 +63,9 @@ if __name__ == "__main__":
     operation = AVG
     windowSize = 1
     modelName = '../Models/vgg19.h5'
-    descriptorType = 2
+    detectorType = 2
     confidenceArg = 0.75
-    faceDescriptor = cv2.dnn.readNetFromCaffe('../Models/deploy.prototxt.txt', '../Models/res10_300x300_ssd_iter_140000.caffemodel')
+    faceDetector = cv2.dnn.readNetFromCaffe('../Models/deploy.prototxt.txt', '../Models/res10_300x300_ssd_iter_140000.caffemodel')
 
     parser = argparse.ArgumentParser(description='Executable to test Emotion Face Recognition.')
     parser.add_argument('-r', dest='resultsDir',
@@ -104,16 +104,16 @@ if __name__ == "__main__":
             operation = MEDIAN
         elif args.operation == "max" or args.operation == "MAX":
             operation = MAX
-    if args.descriptor:
-        if str(args.descriptor) == 'DLIB' or str(args.descriptor) == 'dlib':
-            faceDescriptor = dlib.get_frontal_face_detector()
-            descriptorType = 0
-        elif str(args.descriptor) == 'OPENCV' or str(args.descriptor) == 'opencv':
-            faceDescriptor = cv2.CascadeClassifier('../Models/haarcascade_frontalface_default.xml')
-            descriptorType = 1
-        elif str(args.descriptor) == 'DNN' or str(args.descriptor) == 'dnn':
-            faceDescriptor = cv2.dnn.readNetFromCaffe('../Models/deploy.prototxt.txt', '../Models/res10_300x300_ssd_iter_140000.caffemodel')
-            descriptorType = 2
+    if args.detector:
+        if str(args.detector) == 'DLIB' or str(args.detector) == 'dlib':
+            faceDetector = dlib.get_frontal_face_detector()
+            detectorType = 0
+        elif str(args.detector) == 'OPENCV' or str(args.detector) == 'opencv':
+            faceDetector = cv2.CascadeClassifier('../Models/haarcascade_frontalface_default.xml')
+            detectorType = 1
+        elif str(args.detector) == 'DNN' or str(args.detector) == 'dnn':
+            faceDetector = cv2.dnn.readNetFromCaffe('../Models/deploy.prototxt.txt', '../Models/res10_300x300_ssd_iter_140000.caffemodel')
+            detectorType = 2
     if args.inputVar:
         if os.path.isdir(str(args.inputVar)):
             images = glob.glob(str(args.inputVar)+'*.jpg')
@@ -157,9 +157,9 @@ if __name__ == "__main__":
                 ret, frame = cap.read()
                 frameSaved = frame
                 # Detect the faces
-                # OpenCV face descriptor
-                if descriptorType == 1:
-                    faces = faceDescriptor.detectMultiScale(frame, 1.2, 4)
+                # OpenCV face detector
+                if detectorType == 1:
+                    faces = faceDetector.detectMultiScale(frame, 1.2, 4)
                     facesLen = 0
 
                     k=cv2.waitKey(1)
@@ -218,9 +218,9 @@ if __name__ == "__main__":
                             printable_y=printable_y - 15  
                         facesLen += 1
                     cv2.imshow('Emotion Detector', frame)
-                # DLib face descriptor
-                elif descriptorType == 0:
-                    dets=faceDescriptor(frame, 0)
+                # DLib face detector
+                elif detectorType == 0:
+                    dets=faceDetector(frame, 0)
 
                     k=cv2.waitKey(1)
                     if k == 27:
@@ -292,8 +292,8 @@ if __name__ == "__main__":
                         1.0, (224, 224), 
                         (104.0, 177.0, 123.0))
 
-                    faceDescriptor.setInput(blob)
-                    detections = faceDescriptor.forward()
+                    faceDetector.setInput(blob)
+                    detections = faceDetector.forward()
                     facesLen = 0
 
                     key = cv2.waitKey(1)
@@ -365,9 +365,9 @@ if __name__ == "__main__":
             while(True):
                 ret, frame = cap.read()
                 frameSaved = frame
-                # OpenCV face descriptor
-                if descriptorType == 1:
-                    faces = faceDescriptor.detectMultiScale(frame, 1.2, 4)
+                # OpenCV face detector
+                if detectorType == 1:
+                    faces = faceDetector.detectMultiScale(frame, 1.2, 4)
                     print(faces)
                     facesLen = 0
                     k=cv2.waitKey(1)
@@ -398,9 +398,9 @@ if __name__ == "__main__":
                             printable_y=printable_y - 15  
                         facesLen += 1
                     cv2.imshow('Emotion Detector', frame)
-                # DLib face descriptor
-                elif descriptorType == 0:
-                    dets=faceDescriptor(frame, 0)
+                # DLib face detector
+                elif detectorType == 0:
+                    dets=faceDetector(frame, 0)
                     k=cv2.waitKey(1)
                     if k == 27:
                         break
@@ -437,7 +437,7 @@ if __name__ == "__main__":
                             ), d.top()-printable_y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color[face], 2)
                             printable_y=printable_y - 15
                     cv2.imshow('Emotion Detector', frame)
-                # DNN face descriptor
+                # DNN face detector
                 else:
                     (h, w) = frameSaved.shape[:2]
                     blob = cv2.dnn.blobFromImage(cv2.resize(
@@ -445,8 +445,8 @@ if __name__ == "__main__":
                         1.0, (224, 224), 
                         (104.0, 177.0, 123.0))
 
-                    faceDescriptor.setInput(blob)
-                    detections = faceDescriptor.forward()
+                    faceDetector.setInput(blob)
+                    detections = faceDetector.forward()
                     facesLen = 0
 
                     key = cv2.waitKey(1)
@@ -500,8 +500,8 @@ if __name__ == "__main__":
         for image in images:
             imgAux=cv2.imread(image, 1)
             
-            if descriptorType == 1:
-                faces=faceDescriptor.detectMultiScale(imgAux, 1.1, 4)
+            if detectorType == 1:
+                faces=faceDetector.detectMultiScale(imgAux, 1.1, 4)
                 index=0
                 for (x, y, w, h) in faces:
                     crop_img=cv2.resize(imgAux[y:y+h, x:x+w], (224, 224))
@@ -511,9 +511,9 @@ if __name__ == "__main__":
                     plotEmotions(pred, str(framesCount) + "_" +str(index), crop_img, resultsDir)
                     index=index + 1
                 framesCount=framesCount + 1
-            # DLib face descriptor
-            elif descriptorType == 0:
-                dets=faceDescriptor(imgAux, 0)
+            # DLib face detector
+            elif detectorType == 0:
+                dets=faceDetector(imgAux, 0)
                 index=0
                 for i, d in enumerate(dets):
                     crop_img=cv2.resize(imgAux[d.top():d.top(
@@ -523,13 +523,13 @@ if __name__ == "__main__":
 
                     plotEmotions(pred, str(framesCount) + "_" +str(index), crop_img, resultsDir)
                     index=index + 1
-            # DNN OpenCV face descriptor
+            # DNN OpenCV face detector
             else:
                 (h, w) = imgAux.shape[:2]
                 blob = cv2.dnn.blobFromImage(cv2.resize(imgAux, (224, 224)), 1.0, (224, 224), (104.0, 177.0, 123.0))
 
-                faceDescriptor.setInput(blob)
-                detections = faceDescriptor.forward()
+                faceDetector.setInput(blob)
+                detections = faceDetector.forward()
                 index=0
                 for i in range(0, detections.shape[2]):
                     if (detections[0, 0, i, 2] > 0.6):
@@ -545,9 +545,9 @@ if __name__ == "__main__":
     # Input: Image
     else:
         try:
-            # OpenCV face descriptor
-            if descriptorType == 1:
-                faces = faceDescriptor.detectMultiScale(imageSolo, 1.1, 4)
+            # OpenCV face detector
+            if detectorType == 1:
+                faces = faceDetector.detectMultiScale(imageSolo, 1.1, 4)
                 index=0
                 for (x, y, w, h) in faces:
                     crop_img=cv2.resize(
@@ -557,9 +557,9 @@ if __name__ == "__main__":
 
                     plotEmotions(pred, str(index), crop_img, resultsDir)
                     index=index + 1
-            # DLib face descriptor
-            elif descriptorType == 0:
-                dets=faceDescriptor(imageSolo, 0)
+            # DLib face detector
+            elif detectorType == 0:
+                dets=faceDetector(imageSolo, 0)
                 if len(dets) is not 0:
                     index=0
                     for i, d in enumerate(dets):
@@ -573,13 +573,13 @@ if __name__ == "__main__":
                         pred=model_builded.predict(imgAux)
                         plotEmotions(pred, str(index), crop_img, resultsDir)
                         index=index + 1
-            # DNN OpenCV face descriptor
+            # DNN OpenCV face detector
             else:
                 (h, w) = imageSolo.shape[:2]
                 blob = cv2.dnn.blobFromImage(cv2.resize(imageSolo, (224, 224)), 1.0, (224, 224), (104.0, 177.0, 123.0))
 
-                faceDescriptor.setInput(blob)
-                detections = faceDescriptor.forward()
+                faceDetector.setInput(blob)
+                detections = faceDetector.forward()
                 index=0
                 for i in range(0, detections.shape[2]):
                     if (detections[0, 0, i, 2] > 0.6):
