@@ -78,8 +78,8 @@ if __name__ == "__main__":
                         help='window size for apply operations', default=3)
     parser.add_argument('-o', dest='operation',
                         help='operation to apply AVG|MAX|MEDIAN', default='AVG')
-    parser.add_argument('-d', dest='descriptor',
-                        help='descriptor to use on face detection OPENCV|DLIB|DNN', default='DNN')
+    parser.add_argument('-d', dest='detector',
+                        help='detector to use on face detection OPENCV|DLIB|DNN', default='DNN')
     parser.add_argument('-i', dest='inputVar',
                         help='decide to use image, folder, camera or video', default='0')
     args = parser.parse_args()
