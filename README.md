@@ -37,10 +37,15 @@ $ pipenv install
 $pipenv shell
 ```
 ## Demo parameters
-| Parameter   | Description | Command       |
-|    :----:   |    :----:   |    :----:     |
-| Header      | Title       | Here's this   |
-| Paragraph   | Text        | And more      |
+| Parameter   | Description | Command       | Required       | Default       | Options |
+|    :----:   |    :----:   |    :----:     |    :----:     |    :----:     |    :----:     | 
+| Results Directory      | Directory path to save results    | -r   |True   |    None      | None |
+| Confidence   | Confidence to accept a face detection from DNN OpenCV detector   | -c | False | 0.75 | None |
+| Model File   | Trained model filename   | -m | False  | vgg19.h5 | None |
+| Window Size   | Integer number to apply temporal window operations  | -w | False | 3 | < 2 (Deactivate) \ > 1 (Activate) |
+| Operation   | Operation to apply when temporal window is activated   | -o | AVG | AVG \ MEDIAN \ MAX  |
+| Face Detector  | Select which face detector is going to be used | -d | False | 'DNN' | DNN \ OPENCV \ DLIB |
+| Media Input  |  Select input media  | -i | False | '0' | 0 (camera) \ video file | image file | folder with images |
 
 
 ## Demo
@@ -78,8 +83,8 @@ $ ./uninstall.sh
 ```
 
 ## Built with
-- [TensorFlow](https://flutter.dev/) - Beautiful native apps in record time.
-- [Keras](https://developer.android.com/studio/index.html/) - Tools for building apps on every type of Android device.
+- [TensorFlow](https://github.com/tensorflow/tensorflow) - Tools for machine learning.
+- [Keras](https://github.com/keras-team/keras) - Tools neural networks.
 
 ## Author
 - **Carlos Luque Córdoba** - lead developer: [GitHub](https://github.com/i62lucoc) & [LinkedIn](www.linkedin.com/in/carlosluquecordoba).
