@@ -46,8 +46,8 @@ $ pipenv shell
 | Model File   | Trained model filename   | -m | False  | vgg19.h5 | None |
 | Window Size   | Integer number to apply temporal window operations  | -w | False | 3 | < 2 (Deactivate) <br/> > 1 (Activate) |
 | Operation   | Operation to apply when temporal window is activated   | -o | False | AVG | AVG <br/> MEDIAN <br/> MAX  |
-| Face Detector  | Select which face detector is going to be used | -d | False | 'DNN' | DNN <br/> OPENCV <br/> DLIB |
-| Media Input  |  Select input media  | -i | False | '0' | 0 (Camera) <br/> Video file <br/> Image file <br/> Folder with images |
+| Face Detector  | Select which face detector is going to be used | -d | False | DNN | DNN <br/> OPENCV <br/> DLIB |
+| Media Input  |  Select input media  | -i | False | 0 | 0 (Camera) <br/> Video file <br/> Image file <br/> Folder with images |
 
 
 ## Demo
