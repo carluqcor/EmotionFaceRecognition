@@ -36,7 +36,7 @@ $ cd EmotionFaceRecognition
 $ pipenv install
 
 # Activate shell for executables
-$pipenv shell
+$ pipenv shell
 ```
 ## Demo parameters
 | Parameter   | Description | Command       | Required       | Default       | Options |
