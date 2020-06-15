@@ -74,7 +74,7 @@ $ python3 demo.py -r folderOPENCV/ -i ../Videos/se01.mp4 -m ../Models/vgg19.h5 -
 ```
 
 ### Visualization of emotions predicted on video
-[![Emotions](https://i.imgur.com/CR8xUoa.png)](https://youtu.be/Y3jOWTyVTxs "Emotions")
+[![Emotions](https://i.imgur.com/FZ7RHsN.png)](https://youtu.be/Y3jOWTyVTxs "Emotions")
 
 ## Uninstall
 ```bash
