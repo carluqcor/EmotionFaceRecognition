@@ -286,7 +286,11 @@ if __name__ == "__main__":
                     cv2.imshow('Emotion Detector', frame)
                 # OpenCV DNN face detector
                 else:
-                    (h, w) = frameSaved.shape[:2]
+                    try:
+                        (h, w) = frameSaved.shape[:2]
+                    except:
+                        print('Finished')
+                        sys.exit(1)
                     blob = cv2.dnn.blobFromImage(cv2.resize(
                         frameSaved, (224, 224)), 
                         1.0, (224, 224), 
