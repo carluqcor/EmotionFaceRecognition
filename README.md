@@ -73,7 +73,7 @@ $ python3 demo.py -r folderDNN/ -i ../Images/ -m ../Models/vgg19.h5 -d DNN
 $ python3 demo.py -r folderOPENCV/ -i ../Videos/se01.mp4 -m ../Models/vgg19.h5 -d OPENCV
 ```
 
-### Visualization emotion predict frame from video 
+### Visualization of emotion prediction on video frame 
 ![alt text](https://github.com/i62lucoc/EmotionFaceRecognition/blob/master/Screenshots/VideoHappy.png?raw=true)
 
 ## Uninstall
@@ -95,8 +95,9 @@ $ ./uninstall.sh
 ## Credits
 - [Video for evaluating model and demo](https://www.youtube.com/watch?v=y2YUMPJATmg)
 
-## Author
+## Authors
 - **Carlos Luque Córdoba** - lead developer: [GitHub](https://github.com/i62lucoc) & [LinkedIn](www.linkedin.com/in/carlosluquecordoba).
+- **Manuel J. Marín-Jiménez** - advisor: [GitHub](https://github.com/mjmarin)
 
 
 ## License
