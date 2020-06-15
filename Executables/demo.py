@@ -210,7 +210,7 @@ if __name__ == "__main__":
                         else:
                             auxPred = np.round(np.asarray(pred[0]), decimals=3)
                         # To move vertically down when plotting classnames and their probs
-                        printable_y=0
+                        printable_y=-10
                         # Ploting probs
                         for face in range(0, 6):
                             cv2.putText(frame, str(class_names[face])+': '+str(
@@ -277,7 +277,7 @@ if __name__ == "__main__":
                                 decimals=3)
                         else:
                             auxPred = np.round(np.asarray(pred[0]), decimals=3)
-                        printable_y=0
+                        printable_y=-10
                         for face in range(0, 6):
                             cv2.putText(frame, str(class_names[face])+': '+str(
                                 auxPred[face]), (d.left(
@@ -349,7 +349,7 @@ if __name__ == "__main__":
                                     windowSize)), decimals=3)
                                 else:
                                     auxPred = np.round(np.asarray( pred[0]), decimals=3)
-                                printable_y = 0
+                                printable_y = -10
                                 for face in range(0, 6):
                                     cv2.putText(frameSaved, str(class_names[face]) + ': ' + str(
                                         auxPred[face]), (startX, startY-printable_y), 
@@ -395,7 +395,7 @@ if __name__ == "__main__":
                         imgAux = tf.expand_dims(crop_img, axis=0)
                         pred = np.round(np.asarray( model_builded.predict(imgAux)), decimals=3)
                         cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-                        printable_y=0
+                        printable_y=-10
                         for face in range(0, 6):
                             cv2.putText(frame, str(class_names[face])+': '+str(
                                 pred[0][face]), (x, y-printable_y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color[face], 2)
@@ -434,7 +434,7 @@ if __name__ == "__main__":
                         imgAux=tf.expand_dims(crop_img, axis=0)
                         pred=model_builded.predict(imgAux)
                         cv2.rectangle(frame, (d.left(), d.top()), (d.left()+d.right()-d.left(), d.top()+d.bottom()-d.top()), (255, 0, 0), 2)
-                        printable_y=0
+                        printable_y=-10
                         for face in range(0, 6):
                             cv2.putText(frame, str(class_names[face])+': '+str(
                                 pred[0][face]), (d.left(
@@ -484,7 +484,7 @@ if __name__ == "__main__":
                                 imgAux = tf.expand_dims(crop_img, axis=0)
                                 pred = np.round(np.asarray( model_builded.predict(imgAux)),
                                     decimals=3)
-                                printable_y = 0
+                                printable_y = -10
                                 for face in range(0, 6):
                                     cv2.putText(frameSaved, str(class_names[face]) + ': ' + str(
                                         auxPred[face]), (startX, startY-printable_y), 
