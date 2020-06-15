@@ -74,7 +74,7 @@ $ python3 demo.py -r folderOPENCV/ -i ../Videos/se01.mp4 -m ../Models/vgg19.h5 -
 ```
 
 ### Visualization of emotion prediction on video frame 
-![alt text](https://github.com/i62lucoc/EmotionFaceRecognition/blob/master/Screenshots/VideoHappy.png?raw=true)
+[![Emotions](https://i.imgur.com/CR8xUoa.png)](https://youtu.be/Y3jOWTyVTxs "Emotions")
 
 ## Uninstall
 ```bash
