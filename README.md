@@ -10,7 +10,7 @@
 </p>
 
 ### Description
-EmotionFaceRecognition is a software designed to predict emotions from facial expressions written in Python. The purpose of this project is to allow a machine to be capable to detect face expressions in real time while predicting the emotions.
+EmotionFaceRecognition is a software designed to predict emotions from facial expressions written in Python. The purpose of this project is to allow a machine to be capable to detect face expressions while predicting the emotions.
 
 ## Table of Contents
 * [Install](#install)
