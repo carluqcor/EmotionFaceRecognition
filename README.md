@@ -73,7 +73,7 @@ $ python3 demo.py -r folderDNN/ -i ../Images/ -m ../Models/vgg19.h5 -d DNN
 $ python3 demo.py -r folderOPENCV/ -i ../Videos/se01.mp4 -m ../Models/vgg19.h5 -d OPENCV
 ```
 
-### Visualization of emotion prediction on video frame 
+### Visualization of emotions predicted on video
 [![Emotions](https://i.imgur.com/CR8xUoa.png)](https://youtu.be/Y3jOWTyVTxs "Emotions")
 
 ## Uninstall
