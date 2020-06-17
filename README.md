@@ -74,7 +74,14 @@ $ python3 demo.py -r folderOPENCV/ -i ../Videos/se01.mp4 -m ../Models/vgg19.h5 -
 ```
 
 ### Visualization of emotions predicted on video
-[![Emotions](https://i.imgur.com/FZ7RHsN.png)](https://youtu.be/Y3jOWTyVTxs "Emotions")
+#### DNN OpenCV
+[![Emotions](https://i.imgur.com/DBPibc9.png)](https://youtu.be/_ACrY9N-GKA "Emotions")
+
+#### HaarCascade OpenCV
+[![Emotions](https://i.imgur.com/7iMDj1P.png)](https://youtu.be/43dyeEAV6Gg "Emotions")
+
+#### DLIB
+[![Emotions](https://i.imgur.com/ycEVy4L.png)]https://youtu.be/Xbz5LZg84FA "Emotions")
 
 ## Uninstall
 ```bash
