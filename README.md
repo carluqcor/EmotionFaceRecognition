@@ -73,7 +73,7 @@ $ python3 demo.py -r folderDNN/ -i ../Images/ -m ../Models/vgg19.h5 -d DNN
 $ python3 demo.py -r folderOPENCV/ -i ../Videos/se01.mp4 -m ../Models/vgg19.h5 -d OPENCV
 ```
 
-### Visualization of emotions predicted on video
+### Visualization of emotions predicted on video with different facial detectors
 #### DNN OpenCV
 [![Emotions](https://i.imgur.com/DBPibc9.png)](https://youtu.be/_ACrY9N-GKA "Emotions")
 
