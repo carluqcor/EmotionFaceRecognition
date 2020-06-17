@@ -81,7 +81,7 @@ $ python3 demo.py -r folderOPENCV/ -i ../Videos/se01.mp4 -m ../Models/vgg19.h5 -
 [![Emotions](https://i.imgur.com/7iMDj1P.png)](https://youtu.be/43dyeEAV6Gg "Emotions")
 
 #### DLIB
-[![Emotions](https://i.imgur.com/ycEVy4L.png)]https://youtu.be/Xbz5LZg84FA "Emotions")
+[![Emotions](https://i.imgur.com/ycEVy4L.png)](https://youtu.be/Xbz5LZg84FA "Emotions")
 
 ## Uninstall
 ```bash
