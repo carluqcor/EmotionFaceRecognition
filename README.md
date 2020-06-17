@@ -70,7 +70,9 @@ $ python3 demo.py -r folderDNN/ -i ../Images/ -m ../Models/vgg19.h5 -d DNN
 
 ```bash
 # Execute demo with a video and using OpenCV HaarCascade detector
+$ python3 demo.py -r folderDNN/ -i ../Videos/se01.mp4 -m ../Models/vgg19.h5 -d DNN
 $ python3 demo.py -r folderOPENCV/ -i ../Videos/se01.mp4 -m ../Models/vgg19.h5 -d OPENCV
+$ python3 demo.py -r folderDLIB/ -i ../Videos/se01.mp4 -m ../Models/vgg19.h5 -d DLIB
 ```
 
 ### Visualization of emotions predicted on video with different facial detectors
