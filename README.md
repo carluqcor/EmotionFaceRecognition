@@ -28,11 +28,11 @@ EmotionFaceRecognition is a software designed to predict emotions from facial ex
 $ git clone git@github.com:i62lucoc/EmotionFaceRecognition.git
 
 # Download large files from Google Drive
-$ python3 EmotionFaceRecognition/download.py
+$ cd EmotionFaceRecognition/
+$ python3 download.py
 
 # Install pipenv (Recommended)  or install libraries manually
 $ pip3 install pipenv
-$ cd EmotionFaceRecognition
 $ pipenv install
 
 # Activate shell for executables
