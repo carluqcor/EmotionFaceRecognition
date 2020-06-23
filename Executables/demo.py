@@ -91,9 +91,9 @@ if __name__ == "__main__":
         os.mkdir(resultsDir)
 
     if args.windowSize:
-        windowSize = args.windowSize
+        windowSize = int(args.windowSize)
     if args.confidence:
-        confidenceArg = args.confidence
+        confidenceArg = float(args.confidence)
     if args.model:
         modelName = args.model
         model_builded = load_model(str(modelName))
