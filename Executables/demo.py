@@ -432,7 +432,7 @@ if __name__ == "__main__":
                                 d.right()-d.left()
                             ], (224, 224))
                         imgAux=tf.expand_dims(crop_img, axis=0)
-                        pred=model_builded.predict(imgAux)
+                        pred=np.round(np.asarray(model_builded.predict(imgAux)))
                         cv2.rectangle(frame, (d.left(), d.top()), (d.left()+d.right()-d.left(), d.top()+d.bottom()-d.top()), (255, 0, 0), 2)
                         printable_y=-10
                         for face in range(0, 6):
