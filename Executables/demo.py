@@ -478,7 +478,6 @@ if __name__ == "__main__":
                             (startX, startY, endX, endY) = box.astype("int")
                             try:
                                 cv2.rectangle(frameSaved, (startX-10, startY), (endX+10, endY), (255, 255, 255), 2)
-                                auxPred = []
                                 crop_img = cv2.resize( frameSaved[startY:endY, 
                                     startX-10:endX+10], (224, 224))
                                 imgAux = tf.expand_dims(crop_img, axis=0)
@@ -487,7 +486,7 @@ if __name__ == "__main__":
                                 printable_y = -10
                                 for face in range(0, 6):
                                     cv2.putText(frameSaved, str(class_names[face]) + ': ' + str(
-                                        auxPred[face]), (startX, startY-printable_y), 
+                                        pred[0][face]), (startX, startY-printable_y), 
                                         cv2.FONT_HERSHEY_SIMPLEX, 
                                         0.5, color[face], 2)
                                     printable_y=printable_y - 15  
